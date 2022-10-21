@@ -1,7 +1,7 @@
 const {user_game_biodata} = require('../models');
 
 module.exports={
-    getAll: async (req,res,next)=>{
+    getAll: async (req,res)=>{
         try{
             const allUsers = await user_game_biodata.findAll();
             if (allUsers.length <= 0) {
@@ -17,7 +17,7 @@ module.exports={
                 data: allUsers
             });
         } catch(err){
-            next(err)
+            console.log(err)
         }
     },
     detailBio: async (req, res) => {
@@ -41,7 +41,7 @@ module.exports={
             data: findUser,
         });
     },
-    createBio: async(req,res,next)=>{
+    createBio: async(req,res)=>{
         try{
             const {name,email,region} = req.body;
 
@@ -72,10 +72,10 @@ module.exports={
             });
         
         }catch(err){
-            next(err);
+            console.log(err);
         }
     },
-    updateEmail: async(req,res,next) =>{
+    updateEmail: async(req,res) =>{
         try{
             const {oldEmail, newEmail, confirmEmail} = req.body;
             if (newEmail !== confirmEmail) {
@@ -102,10 +102,10 @@ module.exports={
                 data: updatedBio
             });
         } catch(err){
-            next(err);
+            console.log(err);
         }
     },
-    deleteBio: async(req,res,next)=>{
+    deleteBio: async(req,res)=>{
         const {id} = req.params;
         try{
             const user = await user_game_biodata.findOne({ where: { id: id } });
@@ -130,7 +130,7 @@ module.exports={
             });
 
         } catch(err){
-            next(err);
+            console.log(err);
         }
     }
 }

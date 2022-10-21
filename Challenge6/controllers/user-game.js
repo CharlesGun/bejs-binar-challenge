@@ -2,7 +2,7 @@ const {user_game} = require('../models');
 const bcrypt = require('bcrypt');
 
 module.exports={
-    getAll: async (req,res,next)=>{
+    getAll: async (req,res)=>{
         try{
             const allUsers = await user_game.findAll();
             if (allUsers.length <= 0) {
@@ -18,7 +18,7 @@ module.exports={
                 data: allUsers
             });
         } catch(err){
-            next(err)
+            console.log(err)
         }
     },
     detailUser: async (req, res) => {
@@ -43,7 +43,7 @@ module.exports={
             data: findUser,
         });
     },
-    whoami: (req,res,next)=>{
+    whoami: (req,res)=>{
         const me = req.user
         
         try{
@@ -53,10 +53,10 @@ module.exports={
                 data: me
             });
         }catch(err){
-            next(err);
+            console.log(err);
         }
     },
-    changePass: async (req,res,next)=>{
+    changePass: async (req,res)=>{
         const me = req.user
         try{
             const {oldPass, newPass, confirmPass} = req.body;
@@ -93,10 +93,10 @@ module.exports={
                 message: 'success'
             });
         } catch(err){
-            next(err);
+            console.log(err);
         }
     },
-    deleteUser: async(req,res,next)=>{
+    deleteUser: async(req,res)=>{
         const me = req.user;
         const {id} = req.user.id
         try{
@@ -123,7 +123,7 @@ module.exports={
             });
 
         } catch(err){
-            next(err);
+            console.log(err);
         }
     }
 }

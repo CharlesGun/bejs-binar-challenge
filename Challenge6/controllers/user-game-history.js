@@ -1,7 +1,7 @@
 const {user_game_history} = require('../models');
 
 module.exports={
-    getAll: async (req,res,next)=>{
+    getAll: async (req,res)=>{
         try{
             const allRecords = await user_game_history.findAll();
             if (allRecords.length <= 0) {
@@ -17,7 +17,7 @@ module.exports={
                 data: allRecords
             });
         } catch(err){
-            next(err)
+            console.log(err)
         }
     },
     detailRecord: async (req, res) => {
@@ -38,10 +38,10 @@ module.exports={
         return res.status(200).json({
             status: true,
             message: "get data successful!",
-            data: findRecord,
+            data: findRecord
         });
     },
-    createRecord: async(req,res,next)=>{
+    createRecord: async(req,res)=>{
         try{
             const {playerOneId, playerOneScore, playerTwoId, playerTwoScore} = req.body;
             const totalRounds = await +playerOneScore + +playerTwoScore; 
@@ -59,10 +59,10 @@ module.exports={
                 data: record
             });
         }catch(err){
-            next(err);
+            console.log(err);
         }
     },
-    updateRecord: async(req,res,next) =>{
+    updateRecord: async(req,res) =>{
         const {id} = req.params;
         try{
             const {newPlayerOneScore, newPlayerTwoScore} = req.body;
@@ -74,7 +74,7 @@ module.exports={
                 })
             };
             const newRounds = await +newPlayerOneScore + +newPlayerTwoScore;
-            const updatedBio = await record.update({
+            const updatedRecord = await record.update({
                 playerOneScore: newPlayerOneScore,
                 playerTwoScore: newPlayerTwoScore,
                 totalRounds: newRounds
@@ -83,13 +83,13 @@ module.exports={
             return res.status(200).json({
                 status: true,
                 message: 'success',
-                data: updatedBio
+                data: updatedRecord
             });
         } catch(err){
-            next(err);
+            console.log(err);
         }
     },
-    deleteRecord: async(req,res,next)=>{
+    deleteRecord: async(req,res)=>{
         const {id} = req.params;
         try{
             const record = await user_game_history.findOne({ where: { id: id } });
@@ -106,7 +106,7 @@ module.exports={
                 data: deletedRecord
             });
         } catch(err){
-            next(err);
+            console.log(err);
         }
     }
 }

@@ -8,7 +8,7 @@ const {
 
 
 module.exports = {
-    register: async (req, res, next)=>{
+    register: async (req, res)=>{
         try {
             const {username, password, nickname} = req.body;
 
@@ -41,11 +41,11 @@ module.exports = {
             });
 
         }catch(err){
-            next(err);
+            console.log(err);
         }
     },
 
-    login: async (req, res, next)=>{
+    login: async (req, res)=>{
         try{
             const {username, password} = req.body;
             const user = await user_game.findOne({
@@ -82,7 +82,7 @@ module.exports = {
                 }
             });
         }catch(err){
-            next(err)
+            console.log(err)
         }
     }
 }
